@@ -17,7 +17,7 @@ RUN sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft
 # Install .NET Core SDK
 RUN apt-get install -y apt-transport-https
 RUN apt-get update
-RUN apt-get install -y dotnet-sdk-2.1.4
+RUN apt-get install -y dotnet-sdk-2.2.402
 
 # Upgrade and Install packages for Jenkins/SSH
 RUN apt-get update && apt-get -y upgrade && apt-get install -y git openssh-server && apt-get install -y openjdk-8-jdk

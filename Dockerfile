@@ -8,16 +8,20 @@ RUN apt-get update
 RUN apt-get install -y curl gpg
 
 # Add Microsoft's key
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-RUN mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+# RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+# RUN mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
 
 # Add Microsoft's Ubuntu package feed
-RUN sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main" > /etc/apt/sources.list.d/dotnetdev.list'
+RUN apt-get install wget
+RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN dpkg -i packages-microsoft-prod.deb
 
 # Install .NET Core SDK
+RUN apt-get install software-properties-common -y
+RUN add-apt-repository universe
 RUN apt-get install -y apt-transport-https
 RUN apt-get update
-RUN apt-get install -y dotnet-sdk-2.2
+RUN apt-get install -y dotnet-sdk-3.0
 
 # Upgrade and Install packages for Jenkins/SSH
 RUN apt-get update && apt-get -y upgrade && apt-get install -y git openssh-server && apt-get install -y openjdk-8-jdk
